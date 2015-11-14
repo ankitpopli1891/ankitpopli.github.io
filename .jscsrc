@@ -1,0 +1,11 @@
+{
+  "preset": "google",
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "disallowTrailingWhitespace": null,
+  "validateIndentation": 4,
+  "maximumLineLength": {
+    "value": 120,
+    "allExcept": ["comments", "regex"]
+  },
+  "excludeFiles": ["node_modules/**"]
+}

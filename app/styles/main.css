@@ -1,0 +1,179 @@
+/*
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+
+html {
+  overflow-y: scroll;
+  overflow-x: hidden
+}
+body {
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #FFFFFF!important;
+  background: url(/images/android-at-heart-blurred.jpg) rgba(0, 0, 0, 0.5);
+  ;
+  background-size: cover;
+}
+a {
+  text-decoration: none;
+  outline: 0
+}
+a:hover {
+  text-decoration: none
+}
+.clear {
+  clear: both
+}
+br.clear {
+  margin: 0;
+  padding: 0
+}
+hr {
+  margin: 10px 0
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: Montserrat, sans-serif, Arial;
+  padding-bottom: 5px;
+  color: #373432;
+  line-height: 1em;
+  font-weight: 400
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #111
+}
+p {
+  padding-bottom: 10px;
+  line-height: 25px
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0
+}
+* html .clearfix {
+  zoom: 1
+}
+ol, ul {
+  margin: 0
+}
+a:focus {
+  outline: 0;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+blockquote {
+  font-style: normal;
+}
+a.mt-button {
+  border-radius: 3px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  display: inline-block
+}
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0 rgba(200, 95, 66, .4), inset 0 0 0 8px rgba(255, 255, 255, .6), 0 1px 2px rgba(0, 0, 0, .1);
+}
+.outline {
+  color: #222;
+  line-height: 10px!important
+}
+.row [class^=col-]:last-child .work_process:before {
+  display: none
+}
+.parallax {
+  background-attachment: fixed!important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  color: #FFF
+}
+.parallax-overlay-2 {
+  background-color: rgba(0, 0, 0, .8)
+}
+.parallax .container {
+  padding: 60px 20px
+}
+.parallax .title {
+  margin-bottom: 40px
+}
+.parallax .title h1 {
+  text-transform: uppercase;
+  color: #FFF
+}
+.parallax .title i {
+  border: 4px solid;
+  border-radius: 60px;
+  cursor: pointer;
+  font-size: 34px;
+  padding: 16px
+}
+.parallax .border {
+  display: block;
+  height: 2px;
+  width: 100px;
+  margin: 0 auto
+}
+.parallax .outline {
+  border: 2px solid #FFF;
+  color: #FFF;
+  line-height: 10px!important
+}
+.parallax .outline:hover {
+  background-color: #FFF;
+  color: #222
+}
+.parallax-overlay {
+  background: rgba(0, 0, 0, .8);
+  height: 100%;
+  width: 100%;
+  position: fixed
+}
+.info {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+h1 span, h2 span, h3 span, h4 span {
+  color: #ce5f5f
+}
+.top-colors {
+  padding: 0!important
+}
+.top-color {
+  height: 8px;
+  width: 20%;
+  float: left;
+  background: #249991
+}
+.top-color1 {
+  background: #249991
+}
+.top-color2 {
+  background: #3b658a
+}
+.top-color3 {
+  background: #ce5f5f
+}
+.light-background {
+  padding: 40px 20px;
+  background-color: #F9F9F9;
+  color: #000
+}
+textarea {
+  resize: none
+}
