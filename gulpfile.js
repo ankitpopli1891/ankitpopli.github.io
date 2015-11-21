@@ -320,7 +320,9 @@ gulp.task('default', ['clean'], function(cb) {
 });
 
 gulp.task('deploy', ['default'], function(cb) {
-    ghpages.publish(path.join(process.cwd(), 'dist'), cb);
+    ghpages.publish(path.join(process.cwd(), 'dist'), {
+        branch: 'master'
+    }, cb);
 });
 
 // Load tasks for web-component-tester
