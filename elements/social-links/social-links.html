@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/fontawesome-iconset/fa-brand.html">
+
+<dom-module id="social-links">
+    <template>
+        <style>
+            ul {
+                margin: 2em 0;
+                padding: 0;
+                list-style: none;
+                text-align: center;
+            }
+
+            ul li {
+                display: inline-block;
+                padding: 0;
+            }
+
+            ul li a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 .2em .2em 0;
+                border-radius: 50%;
+                background-color: #FFF;
+                color: #CE5F5F;
+                height: 36px;
+                width: 36px;
+            }
+
+            ul li a:hover {
+                background-color: #CE5F5F;
+                color: #FFF;
+                transition: background-color .5s, color .5s;
+            }
+
+            iron-icon {
+                --iron-icon-height: 16px;
+                --iron-icon-width: 16px;
+            }
+        </style>
+        <ul>
+            <li>
+                <a target="_blank" href="//github.com/ankitpopli1891">
+                    <iron-icon icon="fa-brand:github"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//stackoverflow.com/users/1796173/">
+                    <iron-icon icon="fa-brand:stack-overflow"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//in.linkedin.com/in/ankitpopli1891/">
+                    <iron-icon icon="fa-brand:linkedin"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//facebook.com/ankitpopli1891">
+                    <iron-icon icon="fa-brand:facebook"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//plus.google.com/+AnkitPopli">
+                    <iron-icon icon="fa-brand:google-plus"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//twitter.com/ankitpopli1891">
+                    <iron-icon icon="fa-brand:twitter"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//instagram.com/ankitpopli1891">
+                    <iron-icon icon="fa-brand:instagram"></iron-icon>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//dribbble.com/ankitpopli1891">
+                    <iron-icon icon="fa-brand:dribbble"></iron-icon>
+                </a>
+            </li>
+        </ul>
+    </template>
+    <script>
+        (function() {
+            'use strict';
+            Polymer({
+                is: 'social-links'
+            });
+        })();
+    </script>
+</dom-module>
