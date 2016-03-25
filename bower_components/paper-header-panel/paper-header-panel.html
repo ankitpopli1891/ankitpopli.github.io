@@ -114,6 +114,20 @@ To change the panel container in different modes:
       };
     }
 
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-header-panel` | Mixin applied to the element | `{}`
+`--paper-header-panel-body` | Mixin applied to the element's body (i.e. everything below the toolbar) | `{}`
+`--paper-header-panel-scroll-container` | Mixin applied to the container when in scroll mode | `{}`
+`--paper-header-panel-cover-container` | Mixin applied to the container when in cover mode | `{}`
+`--paper-header-panel-standard-container` | Mixin applied to the container when in standard mode | `{}`
+`--paper-header-panel-seamed-container` | Mixin applied to the container when in seamed mode | `{}`
+`--paper-header-panel-waterfall-container` | Mixin applied to the container when in waterfall mode | `{}`
+`--paper-header-panel-waterfall-tall-container` | Mixin applied to the container when in tall waterfall mode | `{}`
+`--paper-header-panel-shadow` | Mixin applied to the waterfall shadow | `{}`
+
 @group Paper Elements
 @element paper-header-panel
 @demo demo/index.html
@@ -124,16 +138,12 @@ To change the panel container in different modes:
   <template>
     <style>
       :host {
-        --paper-header-panel-shadow: {
-          height: 6px;
-          bottom: -6px;
-          box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
-        };
-
         @apply(--layout-vertical);
 
         position: relative;
         height: 100%;
+
+        @apply(--paper-header-panel);
       }
 
       #mainContainer {
@@ -151,6 +161,8 @@ To change the panel container in different modes:
 
         position: relative;
         min-height: 0;
+
+        @apply(--paper-header-panel-body);
       }
 
       /*
@@ -215,19 +227,18 @@ To change the panel container in different modes:
       }
 
       #dropShadow {
+        transition: opacity 0.5s;
+        height: 6px;
+        box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+
         @apply(--paper-header-panel-shadow);
 
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 6px;
-        pointer-events: none;
-
-        -webkit-transition: opacity 0.5s;
-        transition: opacity 0.5s;
-
         opacity: 0;
+        pointer-events: none;
       }
 
       #dropShadow.has-shadow {
@@ -350,7 +361,9 @@ To change the panel container in different modes:
           atTop: {
             type: Boolean,
             value: true,
-            readOnly: true
+            notify: true,
+            readOnly: true,
+            reflectToAttribute: true
           }
         },
 
@@ -361,10 +374,10 @@ To change the panel container in different modes:
         ready: function() {
           this.scrollHandler = this._scroll.bind(this);
         },
-        
+
         attached: function() {
           this._addListener();
-          // Run `scroll` logic once to initialze class names, etc.
+          // Run `scroll` logic once to initialize class names, etc.
           this._keepScrollingState();
         },
 
