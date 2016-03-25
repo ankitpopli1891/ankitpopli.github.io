@@ -15,7 +15,6 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #FFFFFF!important;
   background: url(/images/android-at-heart-blurred.jpg) rgba(0, 0, 0, 0.5);
-  ;
   background-size: cover;
 }
 a {
@@ -81,7 +80,7 @@ a.mt-button {
   text-transform: uppercase;
   display: inline-block
 }
-.avatar {
+.avatar, .avatar .iron-image {
   width: 200px;
   height: 200px;
   border-radius: 50%;
