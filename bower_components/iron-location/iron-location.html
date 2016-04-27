@@ -1,4 +1,5 @@
 <!--
+@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -11,16 +12,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!--
 
-The `iron-page-url` element manages binding to and from the current URL.
+The `iron-location` element manages binding to and from the current URL.
 
-iron-page-url is the first, and lowest level element in the Polymer team's
-routing system. This is a beta release of iron-page-url as we continue work
-on higher level elements, and as such iron-page-url may undergo breaking
+iron-location is the first, and lowest level element in the Polymer team's
+routing system. This is a beta release of iron-location as we continue work
+on higher level elements, and as such iron-location may undergo breaking
 changes.
 
 #### Properties
 
-When the URL is: `/search?query=583#details` iron-page-url's properties will be:
+When the URL is: `/search?query=583#details` iron-location's properties will be:
 
   - path: `'/search'`
   - query: `'query=583'`
@@ -28,20 +29,20 @@ When the URL is: `/search?query=583#details` iron-page-url's properties will be:
 
 These bindings are bidirectional. Modifying them will in turn modify the URL.
 
-iron-page-url is only active while it is attached to the document.
+iron-location is only active while it is attached to the document.
 
 #### Links
 
-While iron-page-url is active in the document it will intercept clicks on links
+While iron-location is active in the document it will intercept clicks on links
 within your site, updating the URL pushing the updated URL out through the
-databinding system. iron-page-url only intercepts clicks with the intent to
+databinding system. iron-location only intercepts clicks with the intent to
 open in the same window, so middle mouse clicks and ctrl/cmd clicks work fine.
 
 You can customize this behavior with the `urlSpaceRegex`.
 
 #### Dwell Time
 
-iron-page-url protects against accidental history spamming by only adding
+iron-location protects against accidental history spamming by only adding
 entries to the user's history if the URL stays unchanged for `dwellTime`
 milliseconds.
 
@@ -52,7 +53,7 @@ milliseconds.
   'use strict';
 
   Polymer({
-    is: 'iron-page-url',
+    is: 'iron-location',
     properties: {
       /**
        * The pathname component of the URL.
@@ -146,8 +147,8 @@ milliseconds.
       this.listen(window, 'popstate', '_urlChanged');
       this.listen(/** @type {!HTMLBodyElement} */(document.body), 'click', '_globalOnClick');
 
-      this._urlChanged();
       this._initialized = true;
+      this._urlChanged();
     },
     detached: function() {
       this.unlisten(window, 'hashchange', '_hashChanged');
@@ -208,15 +209,19 @@ milliseconds.
         // nothing to do, the URL didn't change
         return;
       }
+      // Need to use a full URL in case the containing page has a base URI.
+      var fullNewUrl = new URL(
+          newUrl, window.location.protocol + '//' + window.location.host).href;
       var now = this._now();
       var shouldReplace =
           this._lastChangedAt + this.dwellTime > now;
       this._lastChangedAt = now;
       if (shouldReplace) {
-        window.history.replaceState({}, '', newUrl);
+        window.history.replaceState({}, '', fullNewUrl);
       } else {
-        window.history.pushState({}, '', newUrl);
+        window.history.pushState({}, '', fullNewUrl);
       }
+      this.fire('location-changed', {}, {node: window});
     },
     /**
      * A necessary evil so that links work as expected. Does its best to
@@ -229,7 +234,6 @@ milliseconds.
       if (!href) {
         return;
       }
-
       window.history.pushState({}, '', href);
       this.fire('location-changed', {}, {node: window});
       event.preventDefault();
@@ -279,7 +283,20 @@ milliseconds.
         url = new URL(href);
       }
 
-      if (url.origin !== window.location.origin) {
+      var origin;
+
+      // IE Polyfill
+      if (window.location.origin) {
+        origin = window.location.origin;
+      } else {
+        origin = window.location.protocol + '//' + window.location.hostname;
+
+        if (window.location.port) {
+          origin += ':' + window.location.port;
+        }
+      }
+
+      if (url.origin !== origin) {
         return null;
       }
       var normalizedHref = url.pathname + url.search + url.hash;
@@ -289,8 +306,10 @@ milliseconds.
           !this._urlSpaceRegExp.test(normalizedHref)) {
         return null;
       }
-
-      return normalizedHref;
+      // Need to use a full URL in case the containing page has a base URI.
+      var fullNormalizedHref = new URL(
+          normalizedHref, window.location.href).href;
+      return fullNormalizedHref;
     },
     _makeRegExp: function(urlSpaceRegex) {
       return RegExp(urlSpaceRegex);

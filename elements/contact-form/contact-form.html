@@ -7,9 +7,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
-<script src="//parse.com/downloads/javascript/parse-1.3.3.min.js"></script>
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -47,12 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <h4>DROP ME A LINE
             <span>&amp; I'LL GET BACK TO YOU ASAP.</span>
         </h4>
-        <form is="iron-form" method="post" action="/">
-            <input-field id="name" placeholder="Walter White" label="Your Good Name" value={{formData.name}} required></input-field>
+        <form is="iron-form" method="post" action="https://zapier.com/hooks/catch/1261124/u6lfrm/">
+            <input-field id="name" placeholder="Walter White" label="Your Good Name" name="name" required></input-field>
 
-            <input-field id="email" type="email" placeholder="walter.white@amc.com" label="Your Email ID" value={{formData.email}} required></input-field>
+            <input-field id="email" type="email" placeholder="walter.white@amc.com" label="Your Email ID" name="email" required></input-field>
 
-            <input-field id="message" placeholder="Stay out my territory." label="Your Message" value={{formData.message}} required></input-field>
+            <input-field id="message" placeholder="Stay out my territory." label="Your Message" name="message" required></input-field>
 
             <span class="input text-right">
                 <button is="paper-button" type="submit">
@@ -67,13 +64,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             Polymer({
                 is: 'contact-form',
                 listeners: {
-                    'iron-form-presubmit': 'sendMessage'
+                    'iron-form-presubmit': 'preSubmit',
+                    'iron-form-error': 'formError',
+                    'iron-form-response': 'formResponse'
                 },
                 properties: {
-                    formData: {
-                        type: Object,
-                        value: {}
-                    },
                     _buttonText: {
                         type: String,
                         readonly: true,
@@ -81,23 +76,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                 },
                 ready: function() {
-                    Parse.initialize('atbjvWwcET1GyJtmOwnh8gOVdDKnG09K7aRfO9Eh', '43Xlp4AmsfHYXXHkxmGpXjzBalbBkpD0S0SsXEIe');
+
                 },
-                sendMessage: function(event) {
-                    if (event) {
-                        event.preventDefault();
-                    }
-                    var contactForm = this;
-                    contactForm._buttonText = 'Sending...';
-                    Parse.Cloud.run('message', contactForm.formData, {
-                        success: function() {
-                            contactForm._buttonText = 'Message Sent';
-                            event.target.reset();
-                        },
-                        error: function() {
-                            contactForm._buttonText = 'Retry';
-                        }
-                    });
+                preSubmit: function(event) {
+                    this._buttonText = 'Sending...';
+                },
+                formError: function(event) {
+                    this._buttonText = 'Retry';
+                },
+                formResponse: function(event) {
+                    this._buttonText = 'Message Sent';
+                    event.target.reset();
                 }
             });
         })();

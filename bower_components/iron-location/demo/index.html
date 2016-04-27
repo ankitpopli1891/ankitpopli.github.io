@@ -1,5 +1,6 @@
 <!doctype html>
 <!--
+@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -10,20 +11,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
 <head>
 
-  <title>iron-page-url</title>
+  <title>iron-location</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../iron-page-url.html">
+  <link rel="import" href="../iron-location.html">
   <link rel="import" href="../../paper-styles/typography.html">
   <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
   <link rel="import" href="../../paper-input/paper-input.html">
   <link rel="import" href="../../paper-slider/paper-slider.html">
+  <link rel="import" href="../../iron-demo-helpers/url-bar.html">
   <link rel="stylesheet" href="../../paper-styles/demo.css">
 </head>
 <body>
+  <url-bar></url-bar>
 
-  <dom-module id="iron-page-url-demo">
+  <dom-module id="iron-location-demo">
     <template>
       <style>
         div.inputs {
@@ -50,9 +53,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           @apply(--layout-horizontal);
         }
       </style>
-      <iron-page-url path="{{path}}" hash="{{hash}}" query="{{query}}"
+      <iron-location path="{{path}}" hash="{{hash}}" query="{{query}}"
                      dwell-time="{{dwellTime}}">
-      </iron-page-url>
+      </iron-location>
 
       <div class="container">
         <div class="inputs">
@@ -67,11 +70,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="history_entries">
           <h3>Dwell Time</h3>
           <p>
-            iron-page-url won't add extraneous entries to the browser's history
+            iron-location won't add extraneous entries to the browser's history
             when changes come in quick succession.
           </p>
           <p>
-            A new history entry will only be added if iron-query-url stays in
+            A new history entry will only be added if iron-location stays in
             the same state longer than dwellTime.
           </p>
           <div>
@@ -89,33 +92,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </template>
     <script>
-      Polymer({
-        is: 'iron-page-url-demo',
-        properties: {
-          historyElementsAdded: {
-            type: Number
+      window.addEventListener('WebComponentsReady', function() {
+        Polymer({
+          is: 'iron-location-demo',
+          properties: {
+            historyElementsAdded: {
+              type: Number
+            }
+          },
+          observers: [
+            'checkHistorySize(path, hash, query, startingHistoryLength)'
+          ],
+          ready: function() {
+            this.startingHistoryLength = window.history.length;
+          },
+          checkHistorySize: function() {
+            this.historyElementsAdded =
+                window.history.length - this.startingHistoryLength;
+          },
+          inSeconds: function(dwellTime) {
+            if (dwellTime === -1) {
+              return -1;
+            }
+            return (Math.round(dwellTime / 100) / 10)
           }
-        },
-        observers: [
-          'checkHistorySize(path, hash, query, startingHistoryLength)'
-        ],
-        ready: function() {
-          this.startingHistoryLength = window.history.length;
-        },
-        checkHistorySize: function() {
-          this.historyElementsAdded =
-              window.history.length - this.startingHistoryLength;
-        },
-        inSeconds: function(dwellTime) {
-          if (dwellTime === -1) {
-            return -1;
-          }
-          return (Math.round(dwellTime / 100) / 10)
-        }
+        });
       });
     </script>
   </dom-module>
 
-  <iron-page-url-demo></iron-page-url-demo>
+  <iron-location-demo></iron-location-demo>
 </body>
 </html>
